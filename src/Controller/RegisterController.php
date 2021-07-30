@@ -311,8 +311,8 @@ final class RegisterController
             $mail->isSMTP();                                      //Send using SMTP
             $mail->SMTPAuth = true;
             $mail->Host = 'smtp.gmail.com';            //Set the SMTP server to send through
-            $mail->Username = 'pw2grupo07@gmail.com';
-            $mail->Password = 'PW2grupo7';
+            $mail->Username = 'groupEmail@example.com';
+            $mail->Password = 'EmailPassword';
             $mail->Port       = 587;                              //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above-->> 8025
 
             //Recipients
