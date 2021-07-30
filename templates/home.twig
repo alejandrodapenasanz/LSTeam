@@ -1,0 +1,69 @@
+{% extends "base.twig" %}
+
+{% block title %}
+
+  Home page
+
+{% endblock %}
+
+{% block register %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/register"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;REGISTER</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block login %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;LOGIN</a>
+  {% endif %}
+  {% if sessionStatus == true %}
+      <a href="/" onclick="logoutButton();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;LOGOUT</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block profile %}
+
+  {% if sessionStatus == true %}
+    <a href="http://localhost:8030/profile">
+      <img src=/{{picture}} width="50" height="50" alt="profile picture">
+    </a>
+  {% endif %}
+  {% if sessionStatus == false %}
+    <a href="http://localhost:8030/profile"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;PROFILE</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block content%}
+
+  <div class="container">    
+    <div class="row">
+      <div class="col-sm-4">
+        <div class="panel panel-primary">
+          <div class="panel-heading">CREA TU BIBLIOTECA DE JUEGOS</div>
+          <div class="panel-body"><img src= "{{ base_path }}assets/img/library.jpg" class="img-responsive" style="width:100%" alt="Image"/></div>
+          <div class="panel-footer">Organiza y lleva siempre contigo todos tus juegos</div>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-primary">
+          <div class="panel-heading">TODAS LAS PLATAFORMAS </div>
+          <div class="panel-body"><img src="{{ base_path }}assets/img/platforms.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Tenemos todos los juegos del mercado</div>
+        </div>
+      </div>
+      <div class="col-sm-4"> 
+        <div class="panel panel-primary">
+          <div class="panel-heading">JUEGA CON TUS AMIGOS </div>
+          <div class="panel-body"><img src="{{ base_path }}assets/img/friends.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
+          <div class="panel-footer">Juega con amigos y miembros de LSteam</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>{% block title %}{% endblock %}</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+<styles>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script type='text/javascript'>
+        
+      function logoutButton(){
+          var ajaxASYNC = {
+              request: function (url){
+                  var xhr = new XMLHttpRequest();
+                  xhr.open("POST", url, false);
+                  xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                  xhr.send(JSON.stringify({"name": "test", "job": "test"}));
+                  return xhr.status;
+              }
+          };
+      return ajaxASYNC.request("http://localhost:8030/logout");
+      }
+
+      function funcionDelete(gameId){
+        $.ajax({
+          type: 'DELETE',
+          url: 'http://localhost:8030/user/wishlist/'+gameId,
+          data: gameId
+        }).done(function (data){
+          location.reload();
+        });
+      }
+      
+  </script>
+
+</styles>
+  
+<header>
+
+  <div class="container for-about">
+    <div class="container text-center">
+      <h1>LSTEAM </h1>      
+      <p>Tu plataforma de juegos online</p>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav">
+          <li><a href={{ url_for ('home') }}>HOME</a></li>
+          <li><a href={{ url_for ('wallet') }}>LSTEAM WALLET</a></li>
+          <li><a href={{ url_for ('wishlist') }}>WISHLIST</a></li>
+          <li><a href={{ url_for ('friends') }}>LSTEAM FRIENDS</a></li>
+          <li><a href={{ url_for ('store') }}>STORE</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li>{% block register%}{% endblock %}</li>
+          <li>{% block login%}{% endblock %}</li>
+          <li>{% block profile%}{% endblock %}</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+</header>
+
+<content>
+
+  {% block content%}{% endblock %}
+
+</content>
+
+<footer class="page-footer font-small blue fixed-bottom">
+  <div class="footer-copyright text-center py-3">© 2021 Copyright:
+    <a href="#"> LSTEAM</a>
+  </div>
+</footer>
+
+</html>

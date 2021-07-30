@@ -1,0 +1,104 @@
+{% extends "base.twig" %}
+
+{% block title %}
+
+    Register page
+
+{% endblock %}
+
+{% block register %}
+
+    {% if sessionStatus == false %}
+            <a href="http://localhost:8030/register"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;REGISTER</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block login %}
+
+    {% if sessionStatus == false %}
+        <a href="http://localhost:8030/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;LOGIN</a>
+    {% endif %}
+    {% if sessionStatus == true %}
+        <a href="/" onclick="logoutButton();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;LOGOUT</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block profile %}
+
+    {% if sessionStatus == true %}
+    <a href="http://localhost:8030/profile">
+      <img src=/{{picture}} width="50" height="50" alt="profile picture">
+    </a>
+    {% endif %}
+    {% if sessionStatus == false %}
+        <a href="http://localhost:8030/profile"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;PROFILE</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block content%}
+
+    <div class="container">
+        <form class="form-horizontal" action="{{ url_for('register') }}" method="POST" style="margin:0 auto">
+            <div class="form-group row">
+                <label class="col-md-4 control-label">username</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="username"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-4 control-label">password</label>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" name="password"/>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-4 control-label">repeat password</label>
+                <div class="col-md-4">
+                    <input type="password" class="form-control" name="repeatPassword" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-4 control-label">mail (@salle.url.edu)</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="email" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-4 control-label">birthday (yyyy-mm-dd)</label>
+                <div class="col-md-4">
+                    <input type="date" class="form-control" name="birthday" />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-md-4 control-label">phone (+34)</label>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="phone" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label"></label>
+                <div class="col-md-4 ">
+                    <button type="submit" class="btn btn-primary">REGISTER</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        {% if information is not empty %}
+            {% for info in information %}
+                <div class="alert alert-warning" role="alert">{{ info }}</div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+{% endblock %}

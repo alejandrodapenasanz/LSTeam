@@ -1,0 +1,81 @@
+{% extends "base.twig" %}
+
+{% block title %}
+
+  Store page
+
+{% endblock %}
+
+{% block register %}
+
+  {% if sessionStatus == false %}
+          <a href="http://localhost:8030/register"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;REGISTER</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block login %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;LOGIN</a>
+  {% endif %}
+  {% if sessionStatus == true %}
+      <a href="/" onclick="logoutButton();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;LOGOUT</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block profile %}
+
+  {% if sessionStatus == true %}
+    <a href="http://localhost:8030/profile">
+      <img src=/{{picture}} width="50" height="50" alt="profile picture">
+    </a>
+  {% endif %}
+  {% if sessionStatus == false %}
+    <a href="http://localhost:8030/profile"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;PROFILE</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block content%}
+
+  <div class="container">
+  
+    {% set i=0 %}
+    {% for game in games %}
+        <form class="form-horizontal" action = "{{ url_for( 'buy', {"gameID": game.gameID} ) }}"  method="POST" enctype="multipart/form-data" style="margin:0 auto">       
+          <div id="{{ i }}">
+            <p>{{ game.title }}</p>
+            <img src={{game.thumb}} width="100" height="100" alt="gamePicture">
+            <p {{ gameID }} value="{{ i }}" >Game ID: {{ game.gameID }}</p>
+            <p>Price: {{ game.normalPrice }} eur</p>
+            <input {{ gameID }} type="hidden" class="form-control" name="gameID" value ="{{ game.normalPrice }}" />
+            {% set i = i+1 %}
+            <div class="form-group">
+              <label class="col-md-4 control-label"></label>
+              <div class="col-md-4 ">
+                <button type="submit" class="btn btn-primary">BUY GAME</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      <div>
+        <form  action = "{{ url_for( 'wishlistPost', {"gameId": game.gameID} ) }}"  method="POST" enctype="multipart/form-data" style="margin:0 auto">
+          <input {{ gameID }} type="hidden" class="form-control" name="gameID" value ="{{ game.gameID }}" />
+          <button type="submit" class="btn btn-primary">ADD TO WISHLIST</button>
+        </form>
+
+      </div>
+    {% endfor %}        
+  </div>
+
+  <div class="container">
+    {% if information is not empty %}
+          {% for info in information %}
+            <div class="alert alert-warning" role="alert">{{ info }}</div>
+          {% endfor %}
+    {% endif %}
+  </div>
+
+{% endblock %}

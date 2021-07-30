@@ -1,0 +1,73 @@
+{% extends "base.twig" %}
+
+{% block title %}
+
+    Store page
+
+{% endblock %}
+
+{% block register %}
+
+    {% if sessionStatus == false %}
+        <a href="http://localhost:8030/register"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;REGISTER</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block login %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;LOGIN</a>
+  {% endif %}
+  {% if sessionStatus == true %}
+      <a href="/" onclick="logoutButton();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;LOGOUT</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block profile %}
+
+    {% if sessionStatus == true %}
+    <a href="http://localhost:8030/profile">
+      <img src=/{{picture}} width="50" height="50" alt="profile picture">
+    </a>
+    {% endif %}
+    {% if sessionStatus == false %}
+        <a href="http://localhost:8030/profile"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;PROFILE</a>
+    {% endif %}
+
+{% endblock %}
+
+{% block content%}
+
+    {% if myGames is not empty %}
+          <div class="container">
+              <div class="row">
+                  <div class="col-xs-12 center-block">
+                      <ul class="list-group">
+                          {% for game in myGames %}
+                              <li class="list-group-item">{{ game.title }}</li>
+                              <img src={{game.thumb}} width="100" height="100" alt="gamePicture">
+                              <li class="list-group-item">{{ game.normalPrice }}</li>
+                          {% endfor %}
+                      </ul>
+                  </div>
+              </div>
+          </div>
+
+        {% if information is not empty %}
+            <div class="container">
+                <div class="row">
+                    <div class="col-xs-12 center-block">
+                        <ul class="list-group">
+                            {% for info in information %}
+                                <li class="list-group-item">{{ info }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+      {% endif %}
+    
+{% endblock %}

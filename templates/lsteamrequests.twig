@@ -1,0 +1,113 @@
+{% extends "base.twig" %}
+
+{% block title %}
+
+  LSteam requests page
+
+{% endblock %}
+
+{% block register %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/register"><span class="glyphicon glyphicon-plus"></span>&nbsp;&nbsp;REGISTER</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block login %}
+
+  {% if sessionStatus == false %}
+      <a href="http://localhost:8030/login"><span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;LOGIN</a>
+  {% endif %}
+  {% if sessionStatus == true %}
+      <a href="/" onclick="logoutButton();"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;LOGOUT</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block profile %}
+
+  {% if sessionStatus == true %}
+    <a href="http://localhost:8030/profile">
+      <img src=/{{picture}} width="50" height="50" alt="profile picture">
+    </a>
+  {% endif %}
+  {% if sessionStatus == false %}
+    <a href="http://localhost:8030/profile"><span class="glyphicon glyphicon-tags"></span>&nbsp;&nbsp;PROFILE</a>
+  {% endif %}
+
+{% endblock %}
+
+{% block content%}
+
+  <div class="container">
+    <form class="form-horizontal" tyle="margin:0 auto">
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4 ">
+                <a href={{ url_for('friends') }} class="btn btn-primary">VIEW FRIENDS</a>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label"></label>
+            <div class="col-md-4 ">
+                <a href={{ url_for('sendRequest') }} class="btn btn-primary">SEND A FRIEND REQUEST</a>
+            </div>
+        </div>
+    </form>
+  </div>
+
+  <div class="container">
+    {% if requestedFriends is not empty %}
+      <ul class="list-group">
+          
+        <li class="list-group-item active">Friend requests:</li>
+        {% set i = 0 %}
+        {% for requestedFriend in requestedFriends %}
+          <li class="list-group-item">Friend's username: {{ requestedFriend }}</li>
+          <!--POST-->
+          <div class="form-group">
+            <form class="form-horizontal" action = "{{ url_for('acceptRequest', {"requestId": requestedIDs[i]}) }}"  method="POST" enctype="multipart/form-data" style="margin:0 auto">
+              <button type="submit" class="btn btn-success">Accept</button>    
+            </form>
+          </div>
+          {% set i = i + 1 %}
+        {% endfor %}
+        
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    {% if requestedFriends is empty%}
+      <ul class="list-group">
+        <li class="list-group-item active">Friend requests:</li>
+        <li class="list-group-item">You have no friend requests at the moment.</li>
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    {% if pendingFriends is not empty %}
+      <ul class="list-group">
+
+        <li class="list-group-item active">Friend invitations:</li>
+        {% for pendingFriend in pendingFriends %}
+            <li class="list-group-item">Friend's username: {{ pendingFriend }} has not accepted your invitation.</li>
+        {% endfor %}
+
+      </ul>
+    {% endif %}
+  </div>
+
+  <div class="container">
+    {% if pendingFriends is empty%}
+      <ul class="list-group">
+        <li class="list-group-item active">Friend invitations:</li>
+        <li class="list-group-item">You have no pending invitations at the moment.</li>
+      </ul>
+    {% endif %}
+  </div>
+
+{% endblock %}
